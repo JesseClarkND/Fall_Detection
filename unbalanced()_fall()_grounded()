@@ -1,0 +1,145 @@
+/*
+NUI_SKELETON_POSITION_HIP_CENTER		0  COG
+NUI_SKELETON_POSITION_SPINE				1
+NUI_SKELETON_POSITION_SHOULDER_CENTER	2  Neck
+NUI_SKELETON_POSITION_HEAD				3
+
+NUI_SKELETON_POSITION_SHOULDER_LEFT		4
+NUI_SKELETON_POSITION_ELBOW_LEFT		5
+NUI_SKELETON_POSITION_WRIST_LEFT		6
+NUI_SKELETON_POSITION_HAND_LEFT			7
+
+NUI_SKELETON_POSITION_SHOULDER_RIGHT	8
+NUI_SKELETON_POSITION_ELBOW_RIGHT		9
+NUI_SKELETON_POSITION_WRIST_RIGHT		10
+NUI_SKELETON_POSITION_HAND_RIGHT		11
+
+NUI_SKELETON_POSITION_HIP_LEFT			12
+NUI_SKELETON_POSITION_KNEE_LEFT			13
+NUI_SKELETON_POSITION_ANKLE_LEFT		14
+NUI_SKELETON_POSITION_FOOT_LEFT			15
+
+NUI_SKELETON_POSITION_HIP_RIGHT			16
+NUI_SKELETON_POSITION_KNEE_RIGHT		17
+NUI_SKELETON_POSITION_ANKLE_RIGHT		18
+NUI_SKELETON_POSITION_FOOT_RIGHT		19
+*/
+
+bool CSkeletalViewerApp::unbalanced(NUI_SKELETON_DATA * pSkel)
+{
+	Vector4 COF;
+	COF.x = (pSkel->SkeletonPositions[15].x+pSkel->SkeletonPositions[19].x)/2;
+	COF.y = (pSkel->SkeletonPositions[15].y+pSkel->SkeletonPositions[19].y)/2;
+	COF.z = (pSkel->SkeletonPositions[15].z+pSkel->SkeletonPositions[19].z)/2;
+
+	Vector4 COK;
+	COK.x = (pSkel->SkeletonPositions[13].x+pSkel->SkeletonPositions[17].x)/2;
+	COK.y = (pSkel->SkeletonPositions[13].y+pSkel->SkeletonPositions[17].y)/2;
+	COK.z = (pSkel->SkeletonPositions[13].z+pSkel->SkeletonPositions[17].z)/2;
+
+	if(pSkel->SkeletonPositions[0].x-COF.x>.35 || pSkel->SkeletonPositions[0].x-COF.x <-.35)
+	{
+		if((pSkel->SkeletonPositions[0].y-COK.y>-.4 || pSkel->SkeletonPositions[0].y-COK.y <.4) && (pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x>.27 || pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x <-.27) || (pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z>.27 || pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z <-.27))
+			return true;
+	}
+
+	if(pSkel->SkeletonPositions[2].x-COF.x>.35 || pSkel->SkeletonPositions[2].x-COF.x <-.35)
+	{
+		if((pSkel->SkeletonPositions[0].y-COK.y>-.4 || pSkel->SkeletonPositions[0].y-COK.y <.4) && (pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x>.27 || pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x <-.27) || (pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z>.27 || pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z <-.27))
+			return true;
+	}
+
+	if(pSkel->SkeletonPositions[0].z-COF.z>.35 || pSkel->SkeletonPositions[0].z-COF.z <-.35)
+	{
+		if((pSkel->SkeletonPositions[0].y-COK.y>-.4 || pSkel->SkeletonPositions[0].y-COK.y <.4) && (pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x>.27 || pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x <-.27) || (pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z>.27 || pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z <-.27))
+			return true;
+	}
+
+	if(pSkel->SkeletonPositions[2].z-COF.z>.35 || pSkel->SkeletonPositions[2].z-COF.z <-.35)
+	{
+		if((pSkel->SkeletonPositions[0].y-COK.y>-.4 || pSkel->SkeletonPositions[0].y-COK.y <.4) && (pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x>.27 || pSkel->SkeletonPositions[0].x-pSkel->SkeletonPositions[2].x <-.27) || (pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z>.27 || pSkel->SkeletonPositions[0].z-pSkel->SkeletonPositions[2].z <-.27))
+			return true;
+	}
+
+	for(int x=12;x<=19;x++)
+		if((pSkel->SkeletonPositions[x].y>pSkel->SkeletonPositions[0].y))// || (pSkel->SkeletonPositions[x].y-pSkel->SkeletonPositions[0].y>.3 || pSkel->SkeletonPositions[x].y-pSkel->SkeletonPositions[0].y <-.3))
+			return true;
+
+	return false;
+}
+
+bool CSkeletalViewerApp::fall(NUI_SKELETON_DATA * pSkel)
+{
+	Vector4 COF;
+	COF.x = (pSkel->SkeletonPositions[15].x+pSkel->SkeletonPositions[19].x)/2;
+	COF.y = (pSkel->SkeletonPositions[15].y+pSkel->SkeletonPositions[19].y)/2;
+	COF.z = (pSkel->SkeletonPositions[15].z+pSkel->SkeletonPositions[19].z)/2;
+
+	if(pSkel->SkeletonPositions[0].x-COF.x>.5 || pSkel->SkeletonPositions[0].x-COF.x <-.5)
+		return true;
+
+	if(pSkel->SkeletonPositions[2].x-COF.x>.5 || pSkel->SkeletonPositions[2].x-COF.x <-.5)
+		return true;
+
+	if(pSkel->SkeletonPositions[0].z-COF.z>.5 || pSkel->SkeletonPositions[0].z-COF.z <-.5)
+		return true;
+
+	if(pSkel->SkeletonPositions[2].z-COF.z>.5 || pSkel->SkeletonPositions[2].z-COF.z <-.5)
+		return true;
+
+	for(int x=12;x<=19;x++)
+		if((pSkel->SkeletonPositions[x].y>pSkel->SkeletonPositions[0].y))
+			return true;
+
+	return false;
+}
+
+bool CSkeletalViewerApp::grounded(NUI_SKELETON_DATA * pSkel)
+{
+	//Find Floor using feet
+	Vector4 Floor;
+	if(pSkel->SkeletonPositions[15].y>pSkel->SkeletonPositions[19].y)//if left foot is lower then right foot
+		Floor.y=pSkel->SkeletonPositions[15].y;
+	else
+		Floor.y=pSkel->SkeletonPositions[19].y;
+
+	Vector4 COF;
+	COF.x = (pSkel->SkeletonPositions[15].x+pSkel->SkeletonPositions[19].x)/2;
+	COF.y = (pSkel->SkeletonPositions[15].y+pSkel->SkeletonPositions[19].y)/2;
+	COF.z = (pSkel->SkeletonPositions[15].z+pSkel->SkeletonPositions[19].z)/2;
+
+	Vector4 COH;
+	COH.x = (pSkel->SkeletonPositions[11].x+pSkel->SkeletonPositions[7].x)/2;
+	COH.y = (pSkel->SkeletonPositions[11].y+pSkel->SkeletonPositions[7].y)/2;
+	COH.z = (pSkel->SkeletonPositions[11].z+pSkel->SkeletonPositions[7].z)/2;
+
+	//Check if hips, neck, and feet are aligned along y-axis
+	if((pSkel->SkeletonPositions[0].y-COF.y>.3 || pSkel->SkeletonPositions[0].y-COF.y <-.3) && (pSkel->SkeletonPositions[2].y-COF.y>.3 || pSkel->SkeletonPositions[2].y-COF.y <-.3))
+	{
+		floorcheck++;
+		if(floorcheck>180)
+		{
+			int x;
+			//sent email
+		}
+		return true;
+	}
+
+	//Check if hands are alinged with knees, like crawling
+	if((pSkel->SkeletonPositions[13].y-COH.y>.3 || pSkel->SkeletonPositions[13].y-COH.y <-.3) && (pSkel->SkeletonPositions[17].y-COH.y>.3 || pSkel->SkeletonPositions[17].y-COH.y <-.3))
+	{
+		floorcheck++;
+		if(floorcheck>180)
+		{
+			int x;
+			//sent email
+		}
+		return true;
+	}
+
+	for(int x=12;x<=19;x++)
+		if((pSkel->SkeletonPositions[x].y>pSkel->SkeletonPositions[0].y))// || (pSkel->SkeletonPositions[x].y-pSkel->SkeletonPositions[0].y>.3 || pSkel->SkeletonPositions[x].y-pSkel->SkeletonPositions[0].y <-.3))
+			return true;
+
+	return false;
+}
